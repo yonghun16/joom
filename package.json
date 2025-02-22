@@ -1,12 +1,20 @@
 {
   "name": "joom",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon"
   },
-  "keywords": [],
-  "author": "",
   "license": "MIT",
-  "description": "Zoom Clone using WebRTC and Websockets"
+  "description": "Zoom Clone using WebRTC and Websockets",
+  "devDependencies": {
+    "@babel/cli": "^7.26.4",
+    "@babel/core": "^7.26.9",
+    "@babel/node": "^7.26.0",
+    "nodemon": "^3.1.9"
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.26.9",
+    "express": "^4.21.2",
+    "pug": "^3.0.3"
+  }
 }
