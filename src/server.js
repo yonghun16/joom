@@ -1,5 +1,5 @@
 import http from "http";
-import WebSocket from "ws";
+import SocketIO from "socket.io";
 import express from "express";
 
 // create express
@@ -12,22 +12,35 @@ app.use("/public", express.static(__dirname + "/public"));
 app.get("/", (_, res) => res.render("home"));
 app.get("/*", (_, res) => res.redirect("/"));
 
-// HTTP Server Make
-const server = http.createServer(app);
+// HTTP Server make
+const httpServer = http.createServer(app);
 
-// WebSocket server Make  ->  http 서버 위에 WebSocket 서버를 만듬
-const wss = new WebSocket.Server({ server })
+// WebSocket Server make 
+const wsServer = SocketIO(httpServer);
+ 
+// WebSocket Server on
+wsServer.on("connection", (socket) => {
+  socket.on("enter_room", (roomName, done) => {
+    setTimeout(() => {
+      done() 
+    }, 1000)
+  })
+});
 
+
+
+/* ---------------- WebSocket Server Code ----------------
+
+// WebSocket Server make
+const wss = new WebSocket.Server({ server });
 
 // fake db
 const sockets = [];
-
 
 // WebSocket Server Event
 function onSocketClose() {
   console.log("Disconnected from Browser ❌");
 }
-
 
 // WebSocket Server on
 wss.on("connection", (socket) => {
@@ -45,7 +58,9 @@ wss.on("connection", (socket) => {
     }
   });
 });
+--------------------------------------------------------- */
+
 
 // HTTP Server on
 const handleListener = () => console.log("Listening on http://localhost:3000 ✅");
-server.listen(3000, handleListener);
+httpServer.listen(3000, handleListener);
